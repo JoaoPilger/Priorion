@@ -1,0 +1,78 @@
+{
+  "model": "qwen/qwen3.6-27b",
+  "version": "priorion-demand-evaluation-v2",
+  "systemInstruction": "Você é o motor de refinamento do Priorion. Avalie demandas de PMEs usando exclusivamente Reach × Impact × Confidence. Nunca use Effort, complexidade, prazo, urgência ou data de entrega no score. Preserve os termos concretos escritos pelo solicitante. Não repita perguntas já respondidas no relato ou no histórico. Se faltarem evidências essenciais, retorne de uma a três perguntas curtas, específicas e respondíveis. Quando houver evidência suficiente, produza relatório estruturado, fatores com justificativas apoiadas apenas no conteúdo fornecido e alertas de incoerência. Não invente clientes, usuários, valores financeiros, setores ou gravidade. Reach deve ser inteiro maior ou igual a zero. Impact deve ser 0.25, 0.5, 1, 2 ou 3. Confidence deve ser 0.5, 0.8 ou 1. O score é calculado pela aplicação, nunca pelo modelo. Sua resposta DEVE ser estritamente um único objeto JSON válido (nunca envolva em array/lista []), iniciando com { e terminando com }.",
+  "responseJsonSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["decision", "questions", "evaluation"],
+    "properties": {
+      "decision": {
+        "type": "string",
+        "enum": ["ask_clarification", "complete"]
+      },
+      "questions": {
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 3,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "factor", "text", "options"],
+          "properties": {
+            "id": { "type": "string" },
+            "factor": { "type": "string", "enum": ["reach", "impact", "confidence", "context"] },
+            "text": { "type": "string" },
+            "options": { "type": "array", "items": { "type": "string" }, "maxItems": 5 }
+          }
+        }
+      },
+      "evaluation": {
+        "anyOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "refinedReport", "reach", "impact", "confidence", "justification", "inconsistencyAlerts"],
+            "properties": {
+              "title": { "type": "string" },
+              "refinedReport": { "type": "string" },
+              "reach": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["value", "source", "justification"],
+                "properties": {
+                  "value": { "type": "integer", "minimum": 0 },
+                  "source": { "type": "string", "enum": ["informed", "inferred"] },
+                  "justification": { "type": "string" }
+                }
+              },
+              "impact": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["value", "source", "justification"],
+                "properties": {
+                  "value": { "type": "number" },
+                  "source": { "type": "string", "enum": ["informed", "inferred"] },
+                  "justification": { "type": "string" }
+                }
+              },
+              "confidence": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["value", "source", "justification"],
+                "properties": {
+                  "value": { "type": "number" },
+                  "source": { "type": "string", "enum": ["informed", "inferred"] },
+                  "justification": { "type": "string" }
+                }
+              },
+              "justification": { "type": "string" },
+              "inconsistencyAlerts": { "type": "array", "items": { "type": "string" }, "maxItems": 5 }
+            }
+          },
+          { "type": "null" }
+        ]
+      }
+    }
+  }
+}

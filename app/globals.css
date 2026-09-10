@@ -1,0 +1,174 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+
+  /* Cor com significado: prioridade — única fonte de cor viva (docs/UI.md) */
+  --color-prioridade-critico: var(--prioridade-critico);
+  --color-prioridade-alto: var(--prioridade-alto);
+  --color-prioridade-medio: var(--prioridade-medio);
+  --color-prioridade-baixo: var(--prioridade-baixo);
+}
+
+:root {
+  /* Tokens claro — docs/UI.md */
+  --background: #fbfbfa; /* canvas */
+  --foreground: #1a1a19; /* texto */
+  --card: #ffffff; /* superficie */
+  --card-foreground: #1a1a19;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a19;
+  --primary: #2743e3; /* acao */
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f3; /* superficie-2 */
+  --secondary-foreground: #1a1a19;
+  --muted: #f5f5f3;
+  --muted-foreground: #6b6b65; /* secundario */
+  --accent: #eef1fe; /* acao-suave */
+  --accent-foreground: #2743e3;
+  --destructive: #d6453d; /* prioridade critico, reaproveitado como semantica de erro */
+  --border: #e8e8e4;
+  --input: #e8e8e4;
+  --ring: #2743e3;
+  --radius: 0.375rem; /* 6px — cards e inputs; badges usam radius-sm (~4px) */
+  --sidebar: #f5f5f3;
+  --sidebar-foreground: #1a1a19;
+  --sidebar-primary: #2743e3;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef1fe;
+  --sidebar-accent-foreground: #2743e3;
+  --sidebar-border: #e8e8e4;
+  --sidebar-ring: #2743e3;
+
+  --prioridade-critico: #d6453d;
+  --prioridade-alto: #e07b39;
+  --prioridade-medio: #a97c00;
+  --prioridade-baixo: #3f8f5f;
+}
+
+.dark {
+  /* Tokens escuro — docs/UI.md */
+  --background: #0a0a0b; /* canvas */
+  --foreground: #ededef; /* texto */
+  --card: #111113; /* superficie */
+  --card-foreground: #ededef;
+  --popover: #17171a; /* superficie-2 */
+  --popover-foreground: #ededef;
+  --primary: #4d7cff; /* acao */
+  --primary-foreground: #0a0a0b;
+  --secondary: #17171a; /* superficie-2 */
+  --secondary-foreground: #ededef;
+  --muted: #1e1e22; /* superficie-3 */
+  --muted-foreground: #9b9ba3; /* secundario */
+  --accent: rgba(77, 124, 255, 0.12); /* acao-suave */
+  --accent-foreground: #6b93ff;
+  --destructive: #ff5c5c; /* prioridade critico dark */
+  --border: #232327;
+  --input: #232327;
+  --ring: #4d7cff;
+  --sidebar: #111113;
+  --sidebar-foreground: #ededef;
+  --sidebar-primary: #4d7cff;
+  --sidebar-primary-foreground: #0a0a0b;
+  --sidebar-accent: rgba(77, 124, 255, 0.12);
+  --sidebar-accent-foreground: #6b93ff;
+  --sidebar-border: #232327;
+  --sidebar-ring: #4d7cff;
+
+  --prioridade-critico: #ff5c5c;
+  --prioridade-alto: #ffa23a;
+  --prioridade-medio: #ffd84d;
+  --prioridade-baixo: #3ddc97;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* Grain 2% sobre o canvas no escuro (docs/UI.md) */
+.dark body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC45IiBudW1PY3RhdmVzPSI0IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+");
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Glow — só no dark, só em badge de prioridade critico/alto e ponto de status (docs/UI.md) */
+@keyframes glow-pulse-critico {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(255, 92, 92, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(255, 92, 92, 0.38);
+  }
+}
+@keyframes glow-pulse-alto {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(255, 162, 58, 0.16);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(255, 162, 58, 0.32);
+  }
+}
+.dark .glow-critico {
+  animation: glow-pulse-critico 2.2s ease-in-out infinite;
+}
+.dark .glow-alto {
+  animation: glow-pulse-alto 2.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dark .glow-critico,
+  .dark .glow-alto {
+    animation: none;
+    box-shadow: 0 0 12px rgba(255, 92, 92, 0.25);
+  }
+}

@@ -1,0 +1,22 @@
+.env
+.env.local
+.env.*
+!.env.example
+node_modules/
+.next/
+.DS_Store
+*.log
+*.tsbuildinfo
+*.db
+
+# repo git aninhado (smoke test descartável, isolado do projeto real)
+smoke-test/
+
+# config local do Claude Code, especifica desta maquina
+.claude/settings.local.json
+
+# artefato temporario de instalacao (paths do Android SDK desta maquina)
+inst_user_settings.tmp
+
+# estado interno do harness do Claude Code (agendamento de wakeups)
+.claude/scheduled_tasks.lock
