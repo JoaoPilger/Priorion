@@ -1,6 +1,6 @@
 # REFINAMENTO POR IA — CONTRATO
 
-Modelo: **Qwen 3.6 27B via Groq** (`qwen/qwen3.6-27b`, configurado com `reasoning_format: 'hidden'` e `reasoning_effort: 'none'`).
+Modelo: **Qwen 3.8 27B via Groq** (`qwen/qwen3.8-27b`, configurado com `reasoning_format: 'hidden'` e `reasoning_effort: 'none'`).
 Endpoint: `POST https://api.groq.com/openai/v1/chat/completions`, confirmado na documentação oficial.
 
 A chamada acontece **no servidor** (route handler). A chave nunca chega ao browser.

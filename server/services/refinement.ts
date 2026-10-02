@@ -1,6 +1,6 @@
 import evaluationConfig from '../../config/ai-demand-evaluation.json';
 
-export const REFINEMENT_MODEL = evaluationConfig.model;
+export const REFINEMENT_MODEL = process.env.GROQ_MODEL || evaluationConfig.model;
 export const REFINEMENT_PROMPT_VERSION = evaluationConfig.version;
 const MAX_RETRIES = 4;
 const RETRY_DELAYS_MS = [800, 1600, 3200, 6000];
@@ -109,7 +109,11 @@ export async function evaluateDemand(input: {
     await new Promise(resolve => setTimeout(resolve, retryDelay(response, attempt)));
   }
 
-  if (!response?.ok) throw new Error(`REFINEMENT_HTTP_${response?.status ?? 503}`);
+  if (!response?.ok) {
+    const errorBody = await response?.text().catch(() => '');
+    console.error(`[Groq Refinement Error] Status: ${response?.status ?? 503}, Detalhes: ${errorBody}`);
+    throw new Error(`REFINEMENT_HTTP_${response?.status ?? 503}${errorBody ? `: ${errorBody}` : ''}`);
+  }
   const raw = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
   const text = raw.choices?.[0]?.message?.content;
   if (!text) throw new Error('REFINEMENT_EMPTY_RESPONSE');

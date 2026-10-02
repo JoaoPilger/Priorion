@@ -46,6 +46,7 @@ function errorResponse(error: unknown) {
     return NextResponse.json({ error: 'Dados da demanda inválidos.' }, { status: 400 });
   }
   if (message.startsWith('REFINEMENT_')) {
+    console.error(`[Refinement API Error] Falha no refinamento: ${message}`);
     return NextResponse.json(
       { error: 'O refinamento está temporariamente indisponível. Tente novamente.' },
       { status: 503 },

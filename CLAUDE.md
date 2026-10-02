@@ -41,7 +41,7 @@ Sistema visual: `docs/UI.md`
 
 - Next.js (App Router) + TypeScript
 - Tailwind + **shadcn/ui**; componentes extras via **21st.dev** quando economizarem tempo
-- **Qwen 3.6 27B via Groq** (`qwen/qwen3.6-27b`) para refinamento e classificação, com raciocínio suprimido (`reasoning_format: 'hidden'`) para adesão estrita ao JSON schema e controle de taxa OTPM.
+- **Qwen 3.8 27B via Groq** (`qwen/qwen3.8-27b`) para refinamento e classificação, com raciocínio suprimido (`reasoning_format: 'hidden'`) para adesão estrita ao JSON schema e controle de taxa OTPM.
 - Route Handlers nativos do Next.js em `app/api/`; acesso a dados centralizado em `lib/supabase/`.
 - **Supabase (PostgreSQL)** como banco de runtime, acessado apenas no servidor. `data/demandas.json` continua no git como semente auditável dos dados de exemplo.
 - Memória de aprendizado: arquivos `.md` em `memoria/`, versionados no git

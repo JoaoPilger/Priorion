@@ -27,7 +27,7 @@ describe('serviço de refinamento', () => {
   });
 
   it('usa o modelo de produção econômico selecionado', () => {
-    expect(REFINEMENT_MODEL).toBe('qwen/qwen3.6-27b');
+    expect(REFINEMENT_MODEL).toBe('qwen/qwen3.8-27b');
   });
 
   it('faz quatro retries antes de retornar erro transitório', async () => {
